@@ -1,18 +1,17 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Text from './src/components/text/text';
+import { StyleSheet } from 'react-native';
+import Home from './src/screens/Home';
+import PlanetDetails from './src/screens/PlanetDetails';
 
+const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  // const [fontsLoaded] = useFonts({
-  //   'Antonio-Medium': require('./assets/fonts/Antonio-Medium.ttf'),
-  //   'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
-  //   'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
-  // });
 
 
   const [appIsReady, setAppIsReady] = useState(false);
@@ -27,7 +26,7 @@ export default function App() {
           'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
         });
       
-        await new Promise(resolve => setTimeout(resolve,5000));
+        await new Promise(resolve => setTimeout(resolve,2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -52,17 +51,28 @@ export default function App() {
 
   
   return (
-    <View style={styles.container}  onLayout={onLayoutRootView} >
-      <Text preset='h1' >Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    
+   <>
+
+    <NavigationContainer onReady={onLayoutRootView} >
+    <Stack.Navigator screenOptions={{headerShown:false}} >
+    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="planetDetails" component={PlanetDetails} />
+    </Stack.Navigator>
+    </NavigationContainer>
+    <StatusBar style='light'/>
+
+
+    </>
+   
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    // backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
