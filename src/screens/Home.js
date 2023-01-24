@@ -1,4 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,31 +9,46 @@ import { PLANET_LIST } from '../data/planet-list';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
-const Home = ({navigation}) => {
+
+const PlanetItem =({item})=>{
+    const {color, name}= item;
+    const navigation = useNavigation();
+    return (
+        <Pressable style={styles.item} onPress={()=>{
+            navigation.navigate('planetDetails',{
+                planet:item
+            });
+    }}>
+       <View style={{flexDirection:'row',alignItems:'center'}}>
+       <View style={[styles.circle,{backgroundColor:color}]}/>
+        <Text preset='h4' style={styles.itemName}>{name}</Text>
+       </View>
+
+        <AntDesign name="right" size={15} color="white" />
+    </Pressable>
+    )
+}
+
+const Home = () => {
+
+
+    const renderItem =({item})=>{
+        
+        return(
+           <PlanetItem item={item} />
+        )
+    }
+
     return (
      
             <SafeAreaView  style={styles.container}>
                 <PageHeader />
-
                 <FlatList 
                 data={PLANET_LIST}
                 keyExtractor={item => item.name}
                 contentContainerStyle={styles.list}
                 ItemSeparatorComponent={()=><View style={styles.seperator} />}
-                renderItem={({item,index})=>{
-                    return(
-                        <Pressable style={styles.item} onPress={()=>{
-navigation.navigate('planetDetails');
-                        }}>
-                           <View style={{flexDirection:'row',alignItems:'center'}}>
-                           <View style={[styles.circle,{backgroundColor:item.color}]}/>
-                            <Text preset='h4' style={styles.itemName}>{item.name}</Text>
-                           </View>
-
-                            <AntDesign name="right" size={15} color="white" />
-                        </Pressable>
-                    )
-                }}
+                renderItem={renderItem}
                 
                 />
             </SafeAreaView>

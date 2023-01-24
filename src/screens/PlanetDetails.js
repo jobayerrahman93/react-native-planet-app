@@ -5,7 +5,10 @@ import PageHeader from '../components/page-header/planet-header'
 import Text from '../components/text/text'
 import { colors } from '../theme/colors'
 
-export default function PlanetDetails() {
+export default function PlanetDetails({navigation,route}) {
+
+  const {planet} = route.params;
+  console.log({planet})
   return (
     <SafeAreaView style={styles.container}>
         <PageHeader backBtn={true}/>

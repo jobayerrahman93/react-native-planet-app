@@ -6,7 +6,7 @@ import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import Text from '../text/text';
 
-export default function PlanetHeader({backBtn}) {
+export default function PlanetHeader({backBtn, title="The planets"}) {
     const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -14,11 +14,11 @@ export default function PlanetHeader({backBtn}) {
             backBtn && <Pressable onPress={()=>{
                 navigation.goBack();
             }}>
-<AntDesign style={{marginRight:10}} name="arrowleft" size={24} color="white" />
+            <AntDesign style={{marginRight:10}} name="arrowleft" size={24} color="white" />
                 
             </Pressable>
         }
-      <Text preset='h2' style={{textTransform:'uppercase'}}>The planets</Text>
+      <Text preset='h2' style={{textTransform:'uppercase'}}>{title}</Text>
     </View>
   )
 }
